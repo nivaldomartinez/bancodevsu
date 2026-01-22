@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="table-actions">
+    <div class="search-container">
+      <input type="text" placeholder="Search..." [formControl]="searchControl" />
+    </div>
+    <button class="add-button" routerLink="/products/add">Agregar</button>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Nombre del producto</th>
+          <th>Descripción <span class="info-icon" title="Descripción detallada">i</span></th>
+          <th>Fecha de liberación <span class="info-icon" title="Fecha de inicio">i</span></th>
+          <th>Fecha de reestructuración <span class="info-icon" title="Fecha de revisión">i</span></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (isLoading()) {
+        <tr>
+          <td colspan="6" class="loading-cell">Cargando productos...</td>
+        </tr>
+        } @else if (filteredProducts().length === 0) {
+        <tr>
+          <td colspan="6" class="loading-cell">No se encontraron productos.</td>
+        </tr>
+        } @else {
+        @for (product of paginatedProducts(); track product.id) {
+        <tr>
+          <td>
+            <img [src]="product.logo" [alt]="product.name" class="logo-img" width="40px" height="40px"
+              [defaultImage]="'logo.png'" />
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.date_release | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ product.date_revision | date: 'dd/MM/yyyy' }}</td>
+          <td class="actions-cell">
+            <div class="menu-container">
+              <button class="menu-button" (click)="toggleMenu(product.id)">⋮</button>
+              @if (activeMenuId() === product.id) {
+              <div class="dropdown-menu">
+                <a [routerLink]="['/products/edit', product.id]" class="dropdown-item">
+                  <span class="icon">✎</span> Editar
+                </a>
+                <button class="dropdown-item delete-item" (click)="confirmDelete(product)">
+                  <span class="icon">🗑</span> Eliminar
+                </button>
+              </div>
+              }
+            </div>
+          </td>
+        </tr>
+        }
+        }
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <div class="results-count">
+        {{ totalItems() }} Resultados
+      </div>
+
+      <div class="pagination-controls">
+        <select (change)="onPageSizeChange($event)" class="page-size-select">
+          @for (size of pageSizeOptions; track size) {
+          <option [value]="size" [selected]="size === pageSize()">{{ size }}</option>
+          }
+        </select>
+
+        <div class="nav-buttons">
+          <button (click)="prevPage()" [disabled]="currentPage() === 1" class="nav-btn">
+            &lt;
+          </button>
+          <span class="page-number">Página {{ currentPage() }} de {{ totalPages() || 1 }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage() >= totalPages()" class="nav-btn">
+            &gt;
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (showDeleteModal()) {
+<app-modal [message]="'¿Estas seguro de eliminar el producto ' + productToDelete()?.name + '?'"
+  (onConfirm)="deleteProduct()" (onCancel)="cancelDelete()"></app-modal>
+}

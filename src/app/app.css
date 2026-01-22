@@ -1,0 +1,52 @@
+.main-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: white;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.main-logo {
+  height: 30px;
+}
+
+.brand-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #003a70;
+  letter-spacing: 1px;
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  color: white;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+.toast-error {
+  background-color: #d32f2f;
+}
+
+.toast-success {
+  background-color: #757575;
+}

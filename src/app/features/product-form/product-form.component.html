@@ -1,0 +1,89 @@
+<div class="form-container">
+  <h2 class="form-title">{{ isEditMode() ? 'Formulario de Edición' : 'Formulario de Registro' }}</h2>
+  <hr class="divider">
+
+  <form [formGroup]="productForm" (ngSubmit)="submit()">
+    <div class="form-grid">
+      
+      <!-- ID -->
+      <div class="form-group">
+        <label for="id">ID</label>
+        <input 
+          id="id" 
+          type="text" 
+          formControlName="id" 
+          [ngClass]="{'invalid': isInvalid('id')}"
+        />
+        <app-error-message [control]="productForm.get('id')"></app-error-message>
+      </div>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input 
+          id="name" 
+          type="text" 
+          formControlName="name"
+          [ngClass]="{'invalid': isInvalid('name')}"
+        />
+        <app-error-message [control]="productForm.get('name')"></app-error-message>
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <input 
+          id="description" 
+          type="text" 
+          formControlName="description"
+          [ngClass]="{'invalid': isInvalid('description')}"
+        />
+        <app-error-message [control]="productForm.get('description')"></app-error-message>
+      </div>
+
+      <!-- Logo -->
+      <div class="form-group">
+        <label for="logo">Logo</label>
+        <input 
+          id="logo" 
+          type="text" 
+          formControlName="logo"
+          [ngClass]="{'invalid': isInvalid('logo')}"
+        />
+        <app-error-message [control]="productForm.get('logo')"></app-error-message>
+      </div>
+
+      <!-- Fecha Liberación -->
+      <div class="form-group">
+        <label for="date_release">Fecha Liberación</label>
+        <input 
+          id="date_release" 
+          type="date" 
+          formControlName="date_release"
+          [ngClass]="{'invalid': isInvalid('date_release')}"
+        />
+        <app-error-message [control]="productForm.get('date_release')"></app-error-message>
+      </div>
+
+      <!-- Fecha Revisión -->
+      <div class="form-group">
+        <label for="date_revision">Fecha Revisión</label>
+        <input 
+          id="date_revision" 
+          type="date" 
+          formControlName="date_revision"
+          [ngClass]="{'invalid': isInvalid('date_revision')}"
+        />
+        <app-error-message [control]="productForm.get('date_revision')"></app-error-message>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-reset" (click)="reset()">Reiniciar</button>
+      <button type="submit" class="btn-submit" [disabled]="productForm.invalid || isSubmitting()">
+        {{ isSubmitting() ? 'Enviando...' : 'Enviar' }}
+      </button>
+    </div>
+  </form>
+</div>
